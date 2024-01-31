@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>PickSmart</title>
+    <link rel="icon" type="image/x-icon" href="/static/ImageLogo3.png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="{{ url_for('static', filename='index.js') }}"></script>
+</head>
+    
+
+<body class="body">
+
+    <header>
+        <ul class="menu">
+            <li><a class="menuItem" href="/">Home</a></li>
+            <li><a class="menuItem" href="/picks">Picks</a></li>
+            <li><a class="menuItem" href="/howtouse">How to Use</a></li>
+            <li><a class="menuItem" href="/contactus">Contact Us</a></li>
+          </ul>
+          <button class="hamburger">
+            <i class="menuIcon material-icons">Menu</i>
+            <i class="closeIcon material-icons">Close</i>
+          </button>
+        <img src="/static/PickSmart Logo3.png" class="PickSmartLogo" alt="PickSmartLogo"/>
+    </header>
+    <p class="Slogan">
+        Make smarter picks on PrizePicks with PickSmart.
+    </p>
+    <div class="home-buttons">
+        <a href="/howtouse" class="htu-button">
+            How to Use
+        </a>
+        <a href="/picks" class="launch-button">
+            Launch Table
+        </a>
+    </div>
+
+
+    <section class="FindSection">
+        <div class="Find">
+            Find the best picks...
+        </div>
+        <img src="/static/data.svg" class="Data" alt="Data SVG"/>
+    </section>
+
+    <section class="SitSection">
+        <img src="/static/fans.svg" class="Fans" alt="Fans SVG"/>
+        <div class="Sit">
+            Then sit back and watch!
+        </div>
+    </section>
+</body>
+</html>

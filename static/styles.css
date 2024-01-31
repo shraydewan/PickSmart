@@ -1,0 +1,401 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+header {
+	height: 80px;
+	width: 100%;
+	position: fixed;
+	background: #0b3954;
+	font-family: "Avenir Black";
+	font-size: 20pt;
+	margin-right: 10px;
+	display: block;
+}
+
+.body {
+	margin: 0;
+	background: rgb(198,224,255);
+	font-family: "Avenir Black";
+}
+
+.table-container {
+	overflow-x: scroll;
+	overflow-y: scroll;
+}
+
+.styled-table {
+	border-collapse: collapse;
+	margin-left: auto;
+	margin-right: auto;
+	border-radius: 10px;
+}
+
+.styled-table th,
+.styled-table td {
+	border: transparent;
+	padding: 8px;
+	text-align: center;
+}
+
+.styled-table th {
+	background-color: #0b3954;
+	color: #fcfcfc;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.styled-table tr {
+	background-color: #fcfcfc;
+	color: black;
+	font-weight: normal;
+    font-family: "Avenir";
+}
+
+.styled-table tr:nth-child(even) {
+	background-color: #f2f2f2;
+	color: #000000;
+	font-weight: normal;
+}
+
+.styled-table tr:hover {
+	background-color: #000000;
+	color: #fcfcfc;
+	font-weight: normal;
+}
+
+.styled-table .th-sort-asc::after {
+	content: "\25b4";
+}
+
+.styled-table .th-sort-desc::after {
+	content: "\25be";
+}
+
+.styled-table .th-sort-asc::after,
+.styled-table .th-sort-desc::after {
+	margin-left: 5px;
+}
+
+.styled-table .th-sort-asc,
+.styled-table .th-sort-desc {
+	background: #d7907b;
+}
+
+.styled-button {
+	display: inline-block;
+	font-size: 16px;
+	background-color: #79c99e;
+	color: #000000;
+	margin: 0px 7px 1rem 7px;
+	padding: 10px 20px;
+	border: none;
+	cursor: pointer;
+	font-family: "Avenir Black";
+	border-radius: 15px;
+	z-index: 100;
+	top: 1rem;
+	right: 1rem;
+	position: fixed;
+}
+
+.styled-button:hover {
+	background-color: #ecc8ae;
+	color: #000000;
+}
+
+.styled-button-2 {
+	display: inline-block;
+	font-size: 16px;
+	background-color: #79c99e;
+	color: #000000;
+	margin: 0px 7px 1rem 7px;
+	padding: 10px 20px;
+	border: none;
+	cursor: pointer;
+	font-family: "Avenir Black";
+	border-radius: 15px;
+	z-index: 100;
+	top: 1rem;
+	right: 8.5rem;
+	position: fixed;
+}
+
+.styled-button-2:hover {
+	background-color: #ecc8ae;
+	color: #000000;
+}
+
+.hamburger {
+	position: fixed;
+	z-index: 100;
+	top: 1rem;
+	left: 1rem;
+	background: #fcfcfc;
+	cursor: pointer;
+	font-family: "Avenir Black";
+	display: inline-block;
+	font-size: 16px;
+	background-color: #fcfcfc;
+	color: #000000;
+	padding: 10px 20px;
+	border: none;
+	border-radius: 15px;
+}
+
+.hamburger i {
+	font-family: "Avenir Black";
+}
+
+.closeIcon {
+	display: none;
+}
+
+.menu {
+	position: fixed;
+	transform: translateY(-100%);
+	transition: transform 0.2s;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 99;
+	background: #ecc8ae;
+	list-style: none;
+	padding-top: 4rem;
+	padding-left: 1rem;
+	font-family: "Avenir Black";
+}
+
+.showMenu {
+	transform: translateY(0);
+}
+
+.FindSection {
+	display: flex;
+	align-items: center;
+}
+
+.Find {
+	padding: 40px;
+	color: #000000;
+	font-size: 40pt;
+	text-align: left;
+}
+
+.Data {
+	padding: 40px;
+	width: 400px;
+	height: 300px;
+	display: block;
+}
+
+.SitSection {
+	display: flex;
+	align-items: center;
+}
+
+.Fans {
+	padding: 40px;
+	width: 400px;
+	height: 300px;
+	display: block;
+}
+
+.Sit {
+	padding: 40px;
+	color: #000000;
+	font-size: 40pt;
+	text-align: right;
+}
+
+.nflText {
+	padding: 150px 120px 50px 120px;
+	color: #000000;
+	font-size: 40pt;
+	text-align: center;
+}
+
+.searchText {
+	padding-left: 1rem;
+}
+
+#typeFilter {
+    flex: 1;
+    text-align: left;
+    padding: 10px;
+    font-size: 16px;
+    border: transparent;
+    font-family: "Avenir";
+    border-radius: 10px;
+}
+
+.filter-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Distribute space evenly */
+    margin: 50px 10px 50px 10px;
+    width: 100%;
+}
+
+#filterDropdown,
+#filterTypeDropdown {
+    flex: 0 0 auto;
+    padding: 10px;
+    font-size: 16px;
+    border: transparent;
+    font-family: "Avenir";
+    border-radius: 10px;
+    margin-left: 10px;
+}
+
+.PickSmartLogo {
+	width: 81.0x;
+	height: 78.8px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 0px;
+}
+
+.Slogan {
+	padding: 300px 120px 0px 120px;
+	color: #000000;
+	font-size: 40pt;
+	text-align: center;
+}
+
+.home-buttons {
+	text-align: center;
+	padding: 10px;
+}
+  
+
+.htu-button {
+	background-color: #BABABA;
+}
+
+.launch-button {
+	background-color: #79C99E;
+}
+
+.home-buttons a {
+	border: none;
+	color: black;
+	padding: 15px 32px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	margin: 20px;
+	margin-bottom: 200px;
+	margin-top: 30px;
+	font-family: "Avenir";
+	border-radius: 10px;
+}
+
+
+.high {
+    background-color: #79C99E;
+}
+
+.avg {
+    background-color: rgba(255, 221, 0, 0.744);
+}
+
+.low {
+    background-color: #D7907B;
+}
+
+
+html {
+    height: 100%;
+}
+  
+.login-body {
+    height: 100%;
+    margin: 0;
+    font-family: "Avenir Black";
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    background-color: #0b3954;
+  }
+  
+  #main-holder {
+    width: 50%;
+    height: 70%;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    background-color: white;
+    border-radius: 7px;
+    box-shadow: 0px 0px 5px 2px black;
+  }
+  
+  #login-error-msg-holder {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+  }
+  
+  #login-error-msg {
+    width: 23%;
+    text-align: center;
+    margin: 0;
+    padding: 5px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #8a0000;
+    border: 1px solid #8a0000;
+    background-color: #e58f8f;
+    opacity: 0;
+  }
+  
+  #error-msg-second-line {
+    display: block;
+  }
+  
+  #login-form {
+    align-self: flex-start;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+  }
+  
+  .login-form-field::placeholder {
+    color: #0b3954;
+  }
+  
+  .login-form-field {
+    border: none;
+    border-bottom: 1px solid #0b3954;
+    margin-bottom: 7px;
+    border-radius: 3px;
+    outline: none;
+    padding: 0px 0px 8px 10px;
+  }
+  
+  #login-form-submit {
+    width: 100%;
+    padding: 7px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    background-color: #0b3954;
+    cursor: pointer;
+    outline: none;
+  }
+
+  .forgot-container {
+    padding-bottom: 0rem;
+  }
+
+  .free-trial-on-login-container {
+    padding-bottom: 0rem;
+  }
