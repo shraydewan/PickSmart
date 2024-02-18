@@ -119,7 +119,7 @@ document.addEventListener("DOMContentLoaded", function () {
    * @param {number} column The index of the column to sort
    * @param {boolean} asc Determines if the sorting will be in ascending
    */
-  function sortTableByColumn(table, column, asc = true) {
+  function sortTableByColumn(table, column, asc = false) {
     const dirModifier = asc ? 1 : -1;
     const tBody = table.tBodies[0];
     const rows = Array.from(tBody.querySelectorAll("tr"));
@@ -155,33 +155,6 @@ document.addEventListener("DOMContentLoaded", function () {
       sortTableByColumn(tableElement, headerIndex, !currentIsAscending);
     });
   });
-  const loginForm = document.getElementById("login-form");
-  const loginButton = document.getElementById("login-form-submit");
-  const loginErrorMsg = document.getElementById("login-error-msg");
-
-  loginButton.addEventListener("click", (e) => {
-      e.preventDefault();
-      const username = loginForm.username.value;
-      const password = loginForm.password.value;
-
-      if (username === "user" && password === "web_dev") {
-          alert("You have successfully logged in.");
-          location.reload();
-      } else {
-          loginErrorMsg.style.opacity = 1;
-      }
-  })
-
- 
-
-
-
-
-
-
-
-
-
 
 });
 

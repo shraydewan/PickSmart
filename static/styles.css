@@ -176,6 +176,7 @@ header {
 .FindSection {
 	display: flex;
 	align-items: center;
+	justify-content: center;
 }
 
 .Find {
@@ -195,6 +196,7 @@ header {
 .SitSection {
 	display: flex;
 	align-items: center;
+	justify-content: center;
 }
 
 .Fans {
