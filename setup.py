@@ -2,6 +2,7 @@ from flask import Flask, render_template, session, redirect, request, url_for, f
 import pandas as pd
 import requests
 import concurrent.futures
+import os
 
 app = Flask(__name__, static_url_path='/static')
 
@@ -652,4 +653,5 @@ def login():
 
 
 if __name__ == '__main__':
-    app.run(port=5003)
+    port = int(os.environ.get('PORT', 5004))
+    app.run(host='0.0.0.0', port=port)
