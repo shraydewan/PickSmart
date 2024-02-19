@@ -63,7 +63,7 @@ def toppicks():
 
 # NHL
 
-    def sports(categories=[1190, 1189, 550, 1064, 583, 1215, 1216, 1217, 1218, 1293], event=[42133,42648, 92483]):
+    def sports(categories=[1190, 1189, 550, 1064, 583, 1215, 1216, 1217, 1218, 1293], event=[42133, 42648, 92483]):
         data = []
 
         for e in event:
@@ -115,59 +115,10 @@ def toppicks():
         
     nhl_result_df = sports()
 
-    def soccer(subcategories=[4690, 11783, 11004, 11005, 11006], categories=[537, 1113], event=[40253]):
-            data = []
-
-            for e in event:
-                for cat in categories:
-                    for sub in subcategories:
-                        dk_api = requests.get(f"https://sportsbook.draftkings.com//sites/US-NJ-SB/api/v5/eventgroups/{e}/categories/{cat}/subcategories/{sub}?format=json").json()
-
-                        if 'eventGroup' in dk_api:
-                            for i in dk_api['eventGroup']['offerCategories']:
-                                if 'offerSubcategoryDescriptors' in i:
-                                    for subcategory in i['offerSubcategoryDescriptors']:
-                                        if 'offerSubcategory' in subcategory:
-                                            market = subcategory['name']
-
-                                            for offer in subcategory['offerSubcategory']['offers']:
-                                                for outcome in offer:
-                                                    try:
-                                                        line = outcome['label']
-                                                    except KeyError:
-                                                        line = 0.5
-
-                                                    if 'outcomes' in outcome:
-                                                        for participant in outcome['outcomes']:
-                                                            player = participant.get('label', None)
-                                                            over = participant.get('oddsAmerican', None)
-                                                            under = None if player else over
-
-                                                            data.append({'player': player, 'market': market, 'over': over, 'under': under, 'DraftKings': line})
-
-            if data:
-                df = pd.DataFrame(data)
-                return df
-            else:
-                print("No data found.")
-
-
-    # Create an instance of the scraper
-    soccer_result_df = soccer()
-
-    goalscorer_rows = (soccer_result_df['market'] == 'Goalscorer') | (soccer_result_df['market'] == 'Shots On Target')
-    soccer_result_df['name_count'] = soccer_result_df[goalscorer_rows].groupby('player').cumcount()
-    filtered_soccer_result_df = soccer_result_df[~((goalscorer_rows) & (soccer_result_df['name_count'] <= 1))]
-    filtered_soccer_result_df = filtered_soccer_result_df.drop(columns=['name_count'])
-    filtered_soccer_result_df['DraftKings'] = filtered_soccer_result_df['DraftKings'].str.replace('Goalscorers','0.5')
-    filtered_soccer_result_df['DraftKings'] = filtered_soccer_result_df['DraftKings'].str.replace('Player to Score or Give Assist','0.5')
-    filtered_soccer_result_df['DraftKings'] = filtered_soccer_result_df['DraftKings'].str.extract('(\d+(\.\d+)?)', expand=False)[0]
-    filtered_soccer_result_df['DraftKings'] = pd.to_numeric(filtered_soccer_result_df['DraftKings'], errors='coerce')
-    print(filtered_soccer_result_df)
-
+ 
 # Combining
     
-    result_df = pd.concat([nhl_result_df, filtered_soccer_result_df])
+    result_df = pd.concat([nhl_result_df])
 
 # Editing
 
