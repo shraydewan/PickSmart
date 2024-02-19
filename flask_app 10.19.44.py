@@ -19,7 +19,7 @@ def fetch_data_with_retry(url, params, headers):
 def home():
     return render_template('index.html')
 
-@app.route('/picks/', methods=("POST", "GET"))
+@app.route('/table/', methods=("POST", "GET"))
 def toppicks():
     params = (
         ('per_page', '10000'),
@@ -60,6 +60,57 @@ def toppicks():
     df['Name'] = df['Name'].apply(unidecode_column)
 
 # NFL
+
+    class NFLScraper():
+        def nfl_props_dk(self, categories=[1000, 1001, 1002, 1003, 1342], event=[88808]):
+            data = []
+
+            for e in event:
+                for cat in categories:
+                    dk_api = requests.get(f"https://sportsbook.draftkings.com//sites/US-NJ-SB/api/v5/eventgroups/{e}/categories/{cat}?format=json").json()
+                    if 'eventGroup' in dk_api:
+                        for i in dk_api['eventGroup']['offerCategories']:
+                            if 'offerSubcategoryDescriptors' in i:
+                                dk_markets = i['offerSubcategoryDescriptors']
+
+                        subcategoryIds = []
+                        for i in dk_markets:
+                            subcategoryIds.append(i['subcategoryId'])
+
+                        def fetch_dk_data(ids):
+                            nonlocal data
+                            dk_api = requests.get(f"https://sportsbook.draftkings.com//sites/US-NJ-SB/api/v5/eventgroups/{e}/categories/{cat}/subcategories/{ids}?format=json").json()
+                            for i in dk_api['eventGroup']['offerCategories']:
+                                if 'offerSubcategoryDescriptors' in i:
+                                    dk_markets = i['offerSubcategoryDescriptors']
+
+                            for i in dk_markets:
+                                if 'offerSubcategory' in i:
+                                    market = i['name']
+                                    for j in i['offerSubcategory']['offers']:
+                                        for k in j:
+                                            if 'participant' in k['outcomes'][0]:
+                                                player = k['outcomes'][0]['participant']
+                                                over = k['outcomes'][0]['oddsAmerican']
+                                                try:
+                                                    under = k['outcomes'][1]['oddsAmerican']
+                                                except IndexError:
+                                                    continue
+                                                line = k['outcomes'][1].get('line', None)  # Use get() to provide a default value if 'line' is not present
+                                                data.append({'player': player, 'market': market, 'over': over, 'under': under, 'DraftKings': line})
+                                            else:
+                                                continue
+
+                        with concurrent.futures.ThreadPoolExecutor() as executor:
+                            futures = [executor.submit(fetch_dk_data, ids) for ids in subcategoryIds]
+
+                            concurrent.futures.wait(futures)
+
+            if data:
+                df = pd.DataFrame(data)
+                return df
+            else:
+                print("No data found.")
 
 # NHL
 
@@ -168,7 +219,7 @@ def toppicks():
                 print("No data found.")
 
     class SoccerPicksScraper():
-        def soccer_props_dk(self, subcategories=[4690, 11783, 11004, 11005, 11006], categories=[537, 1113], event=[40253, 40031, 40481, 40032, 86680, 40817, 40030, 44525]):
+        def soccer_props_dk(self, subcategories=[4690, 11783, 11004, 11005, 11006], categories=[537, 1113], event=[40253, 40031, 40481, 40032, 86680, 40817, 40030]):
             data = []
 
             for e in event:
@@ -222,13 +273,16 @@ def toppicks():
 
 # Combining
 
+    nfl_scraper = NFLScraper()
+    nfl_result_df = nfl_scraper.nfl_props_dk()
+
     nhl_scraper = NHLPicksScraper()
     nhl_result_df = nhl_scraper.nhl_props_dk()
 
     bball_scraper = BballPicksScraper()
     bball_result_df = bball_scraper.bball_props_dk()
 
-    result_df = pd.concat([nhl_result_df, bball_result_df, filtered_soccer_result_df])
+    result_df = pd.concat([nfl_result_df, nhl_result_df, bball_result_df, filtered_soccer_result_df])
 
 # Editing
 
