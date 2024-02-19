@@ -3,18 +3,15 @@ import pandas as pd
 import requests
 import concurrent.futures
 import os
-from time import sleep
+from tenacity import retry, stop_after_attempt, wait_fixed
 
 app = Flask(__name__, static_url_path='/static')
 
-def fetch_data_with_retry(url, params, headers, retries=3, retry_delay=30):
-    for _ in range(retries):
-        response = requests.get(url, data=params, headers=headers)
-        if response.status_code == 500:
-            sleep(retry_delay)
-        else:
-            return response
-    return None
+@retry(stop=stop_after_attempt(5), wait=wait_fixed(30))  # Retry 5 times with a fixed delay of 30 seconds between retries
+def fetch_data_with_retry(url, params, headers):
+    response = requests.get(url, params=params, headers=headers)
+    response.raise_for_status()  # Raise an exception for 4xx or 5xx status codes
+    return response
 
 @app.route('/')
 def home():
@@ -32,9 +29,6 @@ def toppicks():
     }
 
     response = fetch_data_with_retry('https://partner-api.prizepicks.com/projections', params, headers)
-
-    if response is None:
-        return render_template('error.html', error_message="Failed to fetch data after retries.")
 
     df1 = pd.json_normalize(response.json()['included'])
     df1 = df1[df1['type'] == 'new_player']
