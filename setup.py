@@ -115,7 +115,7 @@ def toppicks():
         
     nhl_result_df = sports()
 
-    def soccer(subcategories=[4690, 11783, 11004, 11005, 11006], categories=[537, 1113], event=[40253, 40031, 40481, 40032, 86680, 40817, 40030, 44525, 40685]):
+    def soccer(subcategories=[4690, 11783, 11004, 11005, 11006], categories=[537, 1113], event=[40253, 40031, 40481, 40032, 86680, 40817]):
             data = []
 
             for e in event:
@@ -163,7 +163,7 @@ def toppicks():
     filtered_soccer_result_df['DraftKings'] = filtered_soccer_result_df['DraftKings'].str.replace('Player to Score or Give Assist','0.5')
     filtered_soccer_result_df['DraftKings'] = filtered_soccer_result_df['DraftKings'].str.extract('(\d+(\.\d+)?)', expand=False)[0]
     filtered_soccer_result_df['DraftKings'] = pd.to_numeric(filtered_soccer_result_df['DraftKings'], errors='coerce')
-
+    print(filtered_soccer_result_df)
 
 # Combining
     
