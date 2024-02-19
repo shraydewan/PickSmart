@@ -115,7 +115,7 @@ def toppicks():
         
     nhl_result_df = sports()
 
-    def soccer(subcategories=[4690, 11783, 11004, 11005, 11006], categories=[537, 1113], event=[40253, 40031, 40481, 40032, 86680, 40817]):
+    def soccer(subcategories=[4690, 11783, 11004, 11005, 11006], categories=[537, 1113], event=[40253]):
             data = []
 
             for e in event:
