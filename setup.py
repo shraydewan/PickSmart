@@ -63,61 +63,59 @@ def toppicks():
 
 # NHL
 
-    class NHLPicksScraper():
-        def nhl_props_dk(self, categories=[1190, 1189, 550, 1064, 583, 1215, 1216, 1217, 1218, 1293], event=[42133,42648, 92483]):
-            data = []
+    def nhl_props_dk(categories=[1190, 1189, 550, 1064, 583, 1215, 1216, 1217, 1218, 1293], event=[42133,42648, 92483]):
+        data = []
 
-            for e in event:
-                for cat in categories:
-                    dk_api = requests.get(f"https://sportsbook.draftkings.com//sites/US-NJ-SB/api/v5/eventgroups/{e}/categories/{cat}?format=json").json()
-                    if 'eventGroup' in dk_api:
+        for e in event:
+            for cat in categories:
+                dk_api = requests.get(f"https://sportsbook.draftkings.com//sites/US-NJ-SB/api/v5/eventgroups/{e}/categories/{cat}?format=json").json()
+                if 'eventGroup' in dk_api:
+                    for i in dk_api['eventGroup']['offerCategories']:
+                        if 'offerSubcategoryDescriptors' in i:
+                            dk_markets = i['offerSubcategoryDescriptors']
+
+                    subcategoryIds = []
+                    for i in dk_markets:
+                        subcategoryIds.append(i['subcategoryId'])
+
+                    def fetch_dk_data(ids):
+                        nonlocal data
+                        dk_api = requests.get(f"https://sportsbook.draftkings.com//sites/US-NJ-SB/api/v5/eventgroups/{e}/categories/{cat}/subcategories/{ids}?format=json").json()
                         for i in dk_api['eventGroup']['offerCategories']:
                             if 'offerSubcategoryDescriptors' in i:
                                 dk_markets = i['offerSubcategoryDescriptors']
 
-                        subcategoryIds = []
                         for i in dk_markets:
-                            subcategoryIds.append(i['subcategoryId'])
-
-                        def fetch_dk_data(ids):
-                            nonlocal data
-                            dk_api = requests.get(f"https://sportsbook.draftkings.com//sites/US-NJ-SB/api/v5/eventgroups/{e}/categories/{cat}/subcategories/{ids}?format=json").json()
-                            for i in dk_api['eventGroup']['offerCategories']:
-                                if 'offerSubcategoryDescriptors' in i:
-                                    dk_markets = i['offerSubcategoryDescriptors']
-
-                            for i in dk_markets:
-                                if 'offerSubcategory' in i:
-                                    market = i['name']
-                                    for j in i['offerSubcategory']['offers']:
-                                        for k in j:
-                                            if 'participant' in k['outcomes'][0]:
-                                                player = k['outcomes'][0]['participant']
-                                                over = k['outcomes'][0]['oddsAmerican']
-                                                try:
-                                                    under = k['outcomes'][1]['oddsAmerican']
-                                                except IndexError:
-                                                    continue
-                                                line = k['outcomes'][1].get('line', None)  # Use get() to provide a default value if 'line' is not present
-                                                data.append({'player': player, 'market': market, 'over': over, 'under': under, 'DraftKings': line})
-                                            else:
+                            if 'offerSubcategory' in i:
+                                market = i['name']
+                                for j in i['offerSubcategory']['offers']:
+                                    for k in j:
+                                        if 'participant' in k['outcomes'][0]:
+                                            player = k['outcomes'][0]['participant']
+                                            over = k['outcomes'][0]['oddsAmerican']
+                                            try:
+                                                under = k['outcomes'][1]['oddsAmerican']
+                                            except IndexError:
                                                 continue
+                                            line = k['outcomes'][1].get('line', None)  # Use get() to provide a default value if 'line' is not present
+                                            data.append({'player': player, 'market': market, 'over': over, 'under': under, 'DraftKings': line})
+                                        else:
+                                            continue
 
-                        with concurrent.futures.ThreadPoolExecutor() as executor:
-                            futures = [executor.submit(fetch_dk_data, ids) for ids in subcategoryIds]
+                    with concurrent.futures.ThreadPoolExecutor() as executor:
+                        futures = [executor.submit(fetch_dk_data, ids) for ids in subcategoryIds]
 
-                            concurrent.futures.wait(futures)
+                        concurrent.futures.wait(futures)
 
-            if data:
-                df = pd.DataFrame(data)
-                return df
-            else:
-                print("No data found.")
+        if data:
+            df = pd.DataFrame(data)
+            return df
+        else:
+            print("No data found.")
 
 # Combining
 
-    nhl_scraper = NHLPicksScraper()
-    nhl_result_df = nhl_scraper.nhl_props_dk()
+    nhl_result_df = nhl_props_dk()
 
     result_df = pd.concat([nhl_result_df])
 
