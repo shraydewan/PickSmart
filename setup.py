@@ -217,7 +217,7 @@ def toppicks():
     filtered_soccer_result_df = filtered_soccer_result_df.drop(columns=['name_count'])
     filtered_soccer_result_df['DraftKings'] = filtered_soccer_result_df['DraftKings'].str.replace('Goalscorers','0.5')
     filtered_soccer_result_df['DraftKings'] = filtered_soccer_result_df['DraftKings'].str.replace('Player to Score or Give Assist','0.5')
-    filtered_soccer_result_df['DraftKings'] = filtered_soccer_result_df['DraftKings'].str.extract('(\d+(\.\d+)?)', expand=False)[0]
+    #filtered_soccer_result_df['DraftKings'] = filtered_soccer_result_df['DraftKings'].str.extract('(\d+(\.\d+)?)', expand=False)[0]
     filtered_soccer_result_df['DraftKings'] = pd.to_numeric(filtered_soccer_result_df['DraftKings'], errors='coerce')
 
 # Combining
