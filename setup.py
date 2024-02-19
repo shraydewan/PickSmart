@@ -2,7 +2,7 @@ from flask import Flask, render_template
 import pandas as pd
 import requests
 import concurrent.futures
-from unidecode import unidecode
+#from unidecode import unidecode
 import numpy as np
 import os
 from tenacity import retry, stop_after_attempt, wait_fixed
@@ -54,10 +54,10 @@ def toppicks():
 
     df['PrizePicks'] = df['PrizePicks'].astype('float')
 
-    def unidecode_column(value):
-        return unidecode(value)
+    #def unidecode_column(value):
+        #return unidecode(value)
 
-    df['Name'] = df['Name'].apply(unidecode_column)
+    #df['Name'] = df['Name'].apply(unidecode_column)
 
 # NFL
 
