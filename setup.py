@@ -1,4 +1,4 @@
-from flask import Flask, render_template, session, redirect, request, url_for, flash
+from flask import Flask, render_template
 import pandas as pd
 import requests
 import concurrent.futures
@@ -168,7 +168,7 @@ def toppicks():
                 print("No data found.")
 
     class SoccerPicksScraper():
-        def soccer_props_dk(self, subcategories=[4690, 11783, 11004, 11005, 11006], categories=[537, 1113], event=[40253, 40031, 40481, 40032, 86680, 40817, 40030, 44525]):
+        def soccer_props_dk(self, subcategories=[4690, 11783, 11004, 11005, 11006], categories=[537, 1113], event=[40253, 40031, 40481, 40032, 86680, 40817, 40030, 44525, 40685]):
             data = []
 
             for e in event:
