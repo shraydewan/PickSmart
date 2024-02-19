@@ -122,26 +122,27 @@ def toppicks():
 
 # Editing
 
-    # Define replacement mappings
     replacement_mapping = {
-        'Reb': 'Rebs',
-        'Ast': 'Asts',
-        'Blk': 'Blks',
-        'Stl': 'Stls',
         'Saves': 'Goalie Saves',
         'Player Shots': 'Shots',
         'Shots on Target': 'Shots On Target',
         'Player Assists': 'Assists',
-        'Goalscorer': 'Goals',
         'To Score or Give Assist': 'Goal + Assist',
         'Threes': '3-PT Made',
-        'Blocks': 'Blocked Shots'
+        'Pts + Reb': 'Pts+Rebs',
+        'Pts + Reb + Ast':'Pts+Rebs+Asts',
+        'Ast + Reb': 'Rebs+Asts',
+        'Pts + Ast': 'Pts+Asts',
+        'Steals + Blocks': 'Blks+Stls'
     }
 
-    # Apply replacements using a single operation
-    result_df['market'] = result_df['market'].apply(lambda x: replacement_mapping.get(x, x))
+    def replace_in_string(s, replacement_mapping):
+        for key, value in replacement_mapping.items():
+            if key in s:
+                return s.replace(key, value)
+        return s
 
-    # Replace ' ' with '' if '+' exists
+    result_df['market'] = result_df['market'].apply(lambda x: replace_in_string(x, replacement_mapping))
     result_df['market'] = result_df['market'].apply(lambda x: x.replace(' ', '') if '+' in x else x)
 
 
