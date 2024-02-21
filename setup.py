@@ -6,8 +6,11 @@ import concurrent.futures
 import numpy as np
 import os
 from tenacity import retry, stop_after_attempt, wait_fixed
+from judoscale.flask import Judoscale
+
 
 app = Flask(__name__, static_url_path='/static')
+judoscale = Judoscale(app)
 
 @retry(stop=stop_after_attempt(5), wait=wait_fixed(30))  # Retry 5 times with a fixed delay of 30 seconds between retries
 def fetch_data_with_retry(url, params, headers):
@@ -203,4 +206,4 @@ def toppicks():
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5004))
-    app.run(host='0.0.0.0', port=port)
+    judoscale.run(host='0.0.0.0', port=port)
