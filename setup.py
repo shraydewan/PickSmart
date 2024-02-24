@@ -2,7 +2,6 @@ from flask import Flask, render_template
 import pandas as pd
 import requests
 import concurrent.futures
-#from unidecode import unidecode
 import numpy as np
 import os
 from tenacity import retry, stop_after_attempt, wait_fixed
@@ -54,11 +53,6 @@ def toppicks():
                         'attributes.odds_type': 'Type'})
 
     df['PrizePicks'] = df['PrizePicks'].astype('float')
-
-    #def unidecode_column(value):
-        #return unidecode(value)
-
-    #df['Name'] = df['Name'].apply(unidecode_column)
 
 # NFL
 
@@ -145,60 +139,31 @@ def toppicks():
 
     result_df['market'] = result_df['market'].apply(lambda x: replace_in_string(x, replacement_mapping))
     result_df['market'] = result_df['market'].apply(lambda x: x.replace(' ', '') if '+' in x else x)
-
-
-    # Merge and drop unnecessary columns
     final_df = pd.merge(df, result_df, left_on=['Name', 'Stat'], right_on=['player', 'market'], how='inner')
     final_df.drop(['player', 'market'], axis=1, inplace=True)
-
-    # Adjust DraftKings values based on condition
     condition = final_df['Stat'].isin(['Shots On Target', 'Shots'])
     final_df.loc[condition, 'DraftKings'] -= 0.5
-
-    # Convert 'over' and 'under' columns to float
     final_df['Over'] = final_df['over'].astype(float)
     final_df['Under'] = final_df['under'].astype(float)
-
-    # Calculate 'Over %' and 'Under %'
     final_df['Over %'] = final_df['Over'].apply(lambda i: abs(i) / (abs(i) + 100) * 100 if i < 0 else (100 / (i + 100) * 100 if i > 0 else 0))
     final_df['Under %'] = final_df['Under'].apply(lambda i: abs(i) / (abs(i) + 100) * 100 if i < 0 else (100 / (i + 100) * 100 if i > 0 else 0))
-
-    # Calculate difference and adjust 'Under %'
     final_df['diff'] = ((final_df['PrizePicks'] - final_df['DraftKings']) / final_df['DraftKings']) * 100
     final_df['diff'] = final_df['diff'].round(2)
     final_df['Under %'] += 0.1 * final_df['diff'].apply(lambda x: x if x < 0 else 0)
     final_df['Under %'] = final_df['Under %'].apply(lambda x: min(max(x, 5), 95)).round(2)
-
-    # Adjust 'Over %' based on difference
     final_df['Over %'] -= 0.5 * final_df['diff']
     final_df['Over %'] = final_df['Over %'].apply(lambda x: min(max(x, 5), 95)).round(2)
-
-    # Set 'Under %' to None based on condition
     final_df.loc[final_df['Type'] != 'standard', 'Under %'] = None
-
-    # Filter out unwanted League values
     unwanted_leagues = ['1H', '1Q', '2H', '2Q', '3Q', '4Q', '1P', '2P', '3P']
     final_df = final_df[~final_df['League'].str.contains('|'.join(unwanted_leagues))]
-
-    # Convert selected columns to numeric
     numeric_columns = ['Over', 'Under', 'Over %', 'Under %']
     final_df[numeric_columns] = final_df[numeric_columns].apply(pd.to_numeric, errors='coerce')
-
-    # Filter based on Over values
     final_df = final_df[(final_df['Over'] <= 135) & (final_df['Over'] >= -270)]
-
-    # Sort by 'Over %' in descending order
     final_df.sort_values(by='Over %', ascending=False, inplace=True)
-
-    # Select and reorder columns
     final_df = final_df[['League', 'Name', 'Team', 'Opp', 'Stat', 'Type', 'PrizePicks', 'DraftKings', 'Over', 'Under', 'Over %', 'Under %']]
-
-    # Adjust 'Under %' for 'SOCCER' league
     final_df['Under %'] = np.where(final_df['League'] == 'SOCCER', 100 - final_df['Over %'], final_df['Under %'])
  
-    
     html_table = final_df.to_html(classes='styled-table', index=False, justify='center', border=2, na_rep='')
-
     return render_template('toppicks.html', tables=[html_table], titles=final_df.columns.values)
 
 
