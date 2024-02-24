@@ -189,7 +189,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   
     // Existing code for applying conditional formatting based on values
-  
+    var scale = [['low', 50], ['avg', 56], ['high', 100]];
     // Code for applying conditional formatting based on values
     $('tr').each(function () {
       var column11 = $(this).find('td:eq(10)');
