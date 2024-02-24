@@ -8,7 +8,7 @@ header {
 	height: 80px;
 	width: 100%;
 	position: fixed;
-	background: #0b3954;
+	background: #534B62;
 	font-family: "Avenir Black";
 	font-size: 20pt;
 	margin-right: 10px;
@@ -17,7 +17,7 @@ header {
 
 .body {
 	margin: 0;
-	background: rgb(198,224,255);
+	background: #1B1725;
 	font-family: "Avenir Black";
 }
 
@@ -41,7 +41,7 @@ header {
 }
 
 .styled-table th {
-	background-color: #0b3954;
+	background-color: #534B62;
 	color: #fcfcfc;
 	font-weight: bold;
 	cursor: pointer;
@@ -55,7 +55,7 @@ header {
 }
 
 .styled-table tr:nth-child(even) {
-	background-color: #f2f2f2;
+	background-color: #e9e2ea;
 	color: #000000;
 	font-weight: normal;
 }
@@ -81,13 +81,13 @@ header {
 
 .styled-table .th-sort-asc,
 .styled-table .th-sort-desc {
-	background: #d7907b;
+	background: #534B62;
 }
 
 .styled-button {
 	display: inline-block;
 	font-size: 16px;
-	background-color: #79c99e;
+	background-color: #534B62;
 	color: #000000;
 	margin: 0px 7px 1rem 7px;
 	padding: 10px 20px;
@@ -102,14 +102,14 @@ header {
 }
 
 .styled-button:hover {
-	background-color: #ecc8ae;
+	background-color: #534B62;
 	color: #000000;
 }
 
 .styled-button-2 {
 	display: inline-block;
 	font-size: 16px;
-	background-color: #79c99e;
+	background-color: #534B62;
 	color: #000000;
 	margin: 0px 7px 1rem 7px;
 	padding: 10px 20px;
@@ -124,7 +124,7 @@ header {
 }
 
 .styled-button-2:hover {
-	background-color: #ecc8ae;
+	background-color: #534B62;
 	color: #000000;
 }
 
@@ -133,13 +133,13 @@ header {
 	z-index: 100;
 	top: 1rem;
 	left: 1rem;
-	background: #fcfcfc;
+	background: #1B1725;
 	cursor: pointer;
 	font-family: "Avenir Black";
 	display: inline-block;
 	font-size: 16px;
-	background-color: #fcfcfc;
-	color: #000000;
+	background-color: #1B1725;
+	color: white;
 	padding: 10px 20px;
 	border: none;
 	border-radius: 15px;
@@ -162,7 +162,7 @@ header {
 	right: 0;
 	bottom: 0;
 	z-index: 99;
-	background: #ecc8ae;
+	background: #D0BCD5;
 	list-style: none;
 	padding-top: 4rem;
 	padding-left: 1rem;
@@ -173,49 +173,9 @@ header {
 	transform: translateY(0);
 }
 
-.FindSection {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-
-.Find {
-	padding: 40px;
-	color: #000000;
-	font-size: 40pt;
-	text-align: left;
-}
-
-.Data {
-	padding: 40px;
-	width: 400px;
-	height: 300px;
-	display: block;
-}
-
-.SitSection {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-
-.Fans {
-	padding: 40px;
-	width: 400px;
-	height: 300px;
-	display: block;
-}
-
-.Sit {
-	padding: 40px;
-	color: #000000;
-	font-size: 40pt;
-	text-align: right;
-}
-
 .nflText {
 	padding: 150px 120px 50px 120px;
-	color: #000000;
+	color: #D0BCD5;
 	font-size: 40pt;
 	text-align: center;
 }
@@ -264,7 +224,7 @@ header {
 
 .Slogan {
 	padding: 300px 120px 0px 120px;
-	color: #000000;
+	color: #D0BCD5;
 	font-size: 40pt;
 	text-align: center;
 }
@@ -280,12 +240,57 @@ header {
 }
 
 .launch-button {
-	background-color: #79C99E;
+	background-color: #534B62;
+	color: white;
+}
+
+.main-container {
+    display: flex;
+    align-items: center;
+}
+
+.flex-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-right: 10px; /* Adjust the padding to your preference */
+    min-width: 60%; /* Adjust the min-width as needed */
+	max-width: 100%;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 100px); /* Adjust width as needed */
+    grid-template-rows: repeat(3, 100px); /* Adjust height as needed */
+    gap: 10px; /* Adjust gap between squares */
+    padding: 10px; /* Add padding around the grid */
+	min-width: 50%;
+}
+
+.grid-item-1 {
+    background-color: #226CE0; /* Example background color */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+	border-radius: 10px;
+	width: 100px; /* Adjust width as needed */
+    height: 100px; /* Adjust height as needed */
+}
+
+.grid-item-2 {
+	background-color: #D0BCD5; /* Example background color */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+	border-radius: 10px;
+	width: 100px; /* Adjust width as needed */
+    height: 100px; /* Adjust height as needed */
 }
 
 .home-buttons a {
 	border: none;
-	color: black;
+	color: white;
 	padding: 15px 32px;
 	text-align: center;
 	text-decoration: none;
@@ -315,89 +320,3 @@ header {
 html {
     height: 100%;
 }
-  
-.login-body {
-    height: 100%;
-    margin: 0;
-    font-family: "Avenir Black";
-    display: grid;
-    justify-items: center;
-    align-items: center;
-    background-color: #0b3954;
-  }
-  
-  #main-holder {
-    width: 50%;
-    height: 70%;
-    display: grid;
-    justify-items: center;
-    align-items: center;
-    background-color: white;
-    border-radius: 7px;
-    box-shadow: 0px 0px 5px 2px black;
-  }
-  
-  #login-error-msg-holder {
-    width: 100%;
-    height: 100%;
-    display: grid;
-    justify-items: center;
-    align-items: center;
-  }
-  
-  #login-error-msg {
-    width: 23%;
-    text-align: center;
-    margin: 0;
-    padding: 5px;
-    font-size: 12px;
-    font-weight: bold;
-    color: #8a0000;
-    border: 1px solid #8a0000;
-    background-color: #e58f8f;
-    opacity: 0;
-  }
-  
-  #error-msg-second-line {
-    display: block;
-  }
-  
-  #login-form {
-    align-self: flex-start;
-    display: grid;
-    justify-items: center;
-    align-items: center;
-  }
-  
-  .login-form-field::placeholder {
-    color: #0b3954;
-  }
-  
-  .login-form-field {
-    border: none;
-    border-bottom: 1px solid #0b3954;
-    margin-bottom: 7px;
-    border-radius: 3px;
-    outline: none;
-    padding: 0px 0px 8px 10px;
-  }
-  
-  #login-form-submit {
-    width: 100%;
-    padding: 7px;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    font-weight: bold;
-    background-color: #0b3954;
-    cursor: pointer;
-    outline: none;
-  }
-
-  .forgot-container {
-    padding-bottom: 0rem;
-  }
-
-  .free-trial-on-login-container {
-    padding-bottom: 0rem;
-  }
