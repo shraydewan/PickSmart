@@ -161,7 +161,7 @@ def toppicks():
     final_df = final_df[(final_df['Over'] <= 135) & (final_df['Over'] >= -270)]
     final_df.sort_values(by='Over %', ascending=False, inplace=True)
     final_df = final_df[['League', 'Name', 'Team', 'Opp', 'Stat', 'Type', 'PrizePicks', 'DraftKings', 'Over', 'Under', 'Over %', 'Under %']]
-    final_df['Under %'] = np.where(final_df['League'] == 'SOCCER', 100 - final_df['Over %'], final_df['Under %'])
+    #final_df['Under %'] = np.where(final_df['League'] == 'SOCCER', 100 - final_df['Over %'], final_df['Under %'])
  
     html_table = final_df.to_html(classes='styled-table', index=False, justify='center', border=2, na_rep='')
     return render_template('toppicks.html', tables=[html_table], titles=final_df.columns.values)
