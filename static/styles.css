@@ -128,12 +128,27 @@ header {
 	color: #000000;
 }
 
+.free-trial-button {
+	position: fixed;
+	z-index: 100;
+	top: 1rem;
+	right: 1rem;
+	cursor: pointer;
+	font-family: "Avenir Black";
+	display: inline-block;
+	font-size: 16px;
+	background-color: #1B1725;
+	color: white;
+	padding: 10px 20px;
+	border: none;
+	border-radius: 15px;
+}
+
 .hamburger {
 	position: fixed;
 	z-index: 100;
 	top: 1rem;
 	left: 1rem;
-	background: #1B1725;
 	cursor: pointer;
 	font-family: "Avenir Black";
 	display: inline-block;
@@ -231,7 +246,7 @@ header {
 
 .home-buttons {
 	text-align: center;
-	padding: 10px;
+	padding: 6px;
 }
   
 
